@@ -12,6 +12,10 @@ License: MIT
 URL:     http://github.com/KonishchevDmitry/%project_name
 Source:  http://pypi.python.org/packages/source/p/%project_name/%project_name-%{version}.tar.gz
 
+%if 0%{?redos} == 8
+Patch0:  psys-python3.9.patch
+%endif
+
 BuildArch:     noarch
 
 %description %{project_description}
@@ -32,7 +36,7 @@ Conflicts: python36-%project_name
 %setup -n %project_name-%version -q
 
 %if 0%{?redos} == 8
-sed -i 's/\.isAlive()/.is_alive()/g' psys/__init__.py
+%patch0 -p1
 %endif
 
 %build
